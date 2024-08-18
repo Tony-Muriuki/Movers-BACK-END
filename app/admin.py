@@ -49,6 +49,21 @@ def delete_mover(mover_id):
     
     return jsonify({"msg": "Mover deleted"}), 200
 
+@bp.route('/approve_customer/<int:customer_id>', methods=['POST'])
+@jwt_required()
+def approve_customer(mover_id):
+    admin_id = get_jwt_identity()
+    admin_user = User.query.get_or_404(admin_id)
+    
+    if admin_user.role != 'Admin':
+        return jsonify({"msg": "Unauthorized"}), 403
+    
+    mover = User.query.get_or_404(mover_id)
+    mover.approved = True
+    db.session.commit()
+    
+    return jsonify({"msg": "Customer approved"}), 200
+
 @bp.route('/customers', methods=['GET'])
 @jwt_required()
 def list_customers():

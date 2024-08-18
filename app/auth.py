@@ -7,14 +7,15 @@ bp = Blueprint('auth', __name__)
 
 @bp.route('/signup', methods=['POST'])
 def signup():
-    data = request.get_json()
-    hashed_password = generate_password_hash(data['password'])
+    data = request.get_json()  # Get JSON data from the request
+    hashed_password = generate_password_hash(data['password'])  # Hash the password
     
-    user = User(email=data['email'], password_hash=hashed_password, role=data['role'])
-    db.session.add(user)
-    db.session.commit()
+    user = User(email=data['email'], password_hash=hashed_password, role=data['role'])  # Create the User object
     
-    return jsonify({"msg": "User created"}), 201
+    db.session.add(user)  # Add the user to the session
+    db.session.commit()  # Commit the session to save the user in the database
+    
+    return jsonify({"msg": "User created"}), 201  # Return a success message with a 201 status code
 
 @bp.route('/login', methods=['POST'])
 def login():
