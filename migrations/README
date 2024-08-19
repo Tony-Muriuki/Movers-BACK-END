@@ -33,7 +33,7 @@ pip install -r requirements.txt
 # Configure Environment Variables
 
 Create a .env file in the root directory with the following content:
-FLASK_APP=movers_app
+FLASK_APP=routes.py
 FLASK_ENV=development
 DATABASE_URL=sqlite:///'sqlite:///movers.db'
 JWT_SECRET_KEY=your_jwt_secret_key
